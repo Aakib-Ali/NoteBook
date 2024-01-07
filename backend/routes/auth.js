@@ -8,8 +8,7 @@ const fetchuser = require("../middleware/fetchuser");
 
 const JWT_SECRET = "Thereisnothingwithout$Allah$";
 //Route 1: create a user using: POST- "/api/auth/". Dosen't require auth create user without login
-router.post(
-  "/createuser",
+router.post("/createuser",
   [
     body("name", "Enter valid name").isLength({ min: 3 }),
     body("email", "Enter a valid Email").isEmail(),
@@ -77,7 +76,6 @@ router.post(
         return res.status(500).json({ error: "Invalid credentials" });
       }
       const passwordCompare = await bcrypt.compare(password, user.password);
-
       const data = {
         //take id of user from data
         user: {
@@ -98,15 +96,14 @@ router.post(
 //Route3: Get user Details using: POST- "/api/auth/getuser".with login
 router.post("/getuser",fetchuser, async (req, res) => {
     try{
+        //takc req.user.id from fetchuser here i fecthed id of token user
         userId=req.user.id;
         const user=await User.findById(userId).select("-password");
         res.send(user);
-
     }catch (error) {
       console.log(error.message);
       res.status(500).send("Internal Error Occurs");
     }
-
     });
 
 
