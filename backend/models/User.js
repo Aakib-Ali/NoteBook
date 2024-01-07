@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 const { Schema}= mongoose;
+
+//create table in mongo with name User
 const UserSchema = new Schema({
     name:{
         type: String,
