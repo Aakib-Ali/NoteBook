@@ -3,6 +3,9 @@ const router = express.Router();
 const User  = require('../models/User');
 const {body,validationResult} = require('express-validator');
 
+//to use cryptography
+const bcrypt = require('bcryptjs');
+
 
 //create a user using: POST- "/api/auth/". Dosen't require auth create user without login
 router.post('/createuser',[
@@ -18,6 +21,10 @@ router.post('/createuser',[
         return res.status(400).json({error: error.array() });
     }
     
+    //create secret pass by use cryptography
+    const salt = await bcrypt.genSalt(10);
+    const secPassword=await bcrypt.hash(req.body.password,salt);
+
     // create user with velidation that there is user with same email or not
     let user =await User.findOne({ email: req.body.email});
     if(user){
@@ -27,7 +34,7 @@ router.post('/createuser',[
     user =  await User.create({
         name: req.body.name,
         email: req.body.email,
-        password: req.body.password
+        password: secPassword
     });
     res.send({user});
 }catch(error){
