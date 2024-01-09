@@ -82,13 +82,13 @@ const NoteState = (props) => {
   const [notes,setNotes] =useState(noteList);
 
   //Add Note
-  const addNote = ()=>{
+  const addNote = ( title , description , tag)=>{
       const note={
         "_id": "659bce33789b6b4345b5a9f158b",
         "user": "659a7297234b7a061a1a0789b21",
-        "title": "Add notes",
-        "description": "add a note into existed list",
-        "tag": "general",
+        "title": title,
+        "description": description,
+        "tag": tag,
         "dete": "2024-01-08T10:28:03.540Z",
         "__v": 0
       }
