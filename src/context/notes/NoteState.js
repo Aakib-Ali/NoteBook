@@ -83,6 +83,7 @@ const NoteState = (props) => {
 
   //Add Note
   const addNote = ( title , description , tag)=>{
+      //TODO: api call
       const note={
         "_id": "659bce33789b6b4345b5a9f158b",
         "user": "659a7297234b7a061a1a0789b21",
@@ -96,13 +97,19 @@ const NoteState = (props) => {
   }
 
   //Delete Note
+  const deleteNote = (id)=>{
+    //TODO: api call
+    //here we are doing fileter if note._id not present then return or fileter it
+    const newNote=notes.filter((note)=>{return note._id!==id})
+    setNotes(newNote);
+  }
 
   //Update Note
 
 
   
   return (
-    <NoteContext.Provider value={{notes,addNote}}>
+    <NoteContext.Provider value={{notes,addNote,deleteNote}}>
       {props.children}
     </NoteContext.Provider>
   )
