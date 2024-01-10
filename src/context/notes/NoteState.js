@@ -3,87 +3,32 @@ import NoteContext from "./noteContext";
 
 
 const NoteState = (props) => {
-
-  const noteList= [
-    {
-      "_id": "659ad40047deb53e3791fff2",
-      "user": "659a7297b7a061a1a0789b21",
-      "title": "dyshicse",
-      "description": "ajd;klfjasdlfjl;kasdjflk;asjdfkdsjf",
-      "tag": "general",
-      "dete": "2024-01-07T16:40:32.319Z",
-      "__v": 0
-    },
-    {
-      "_id": "659ad40047deb53e3791fff4",
-      "user": "659a7297b7a061a1a0789b21",
-      "title": "dyshicse",
-      "description": "ajd;klfjasdlfjl;kasdjflk;asjdfkdsjf",
-      "tag": "general",
-      "dete": "2024-01-07T16:40:32.473Z",
-      "__v": 0
-    },
-    {
-      "_id": "659ad40047deb53e3791fff6",
-      "user": "659a7297b7a061a1a0789b21",
-      "title": "dyshicse",
-      "description": "ajd;klfjasdlfjl;kasdjflk;asjdfkdsjf",
-      "tag": "general",
-      "dete": "2024-01-07T16:40:32.619Z",
-      "__v": 0
-    },
-    {
-      "_id": "659ad40047deb53e3791fff8",
-      "user": "659a7297b7a061a1a0789b21",
-      "title": "dyshicse",
-      "description": "ajd;klfjasdlfjl;kasdjflk;asjdfkdsjf",
-      "tag": "general",
-      "dete": "2024-01-07T16:40:32.762Z",
-      "__v": 0
-    },
-    {
-      "_id": "659bce33789b6b4b5a9f158a",
-      "user": "659a7297b7a061a1a0789b21",
-      "title": "dyshicse",
-      "description": "ajd;klfjasdlfjl;kasdjflk;asjdfkdsjf",
-      "tag": "general",
-      "dete": "2024-01-08T10:28:03.540Z",
-      "__v": 0
-    },
-    {
-      "_id": "659bce33789b6b4b5a9f158b",
-      "user": "659a7297b7a061a1a0789b21",
-      "title": "dyshicse",
-      "description": "ajd;klfjasdlfjl;kasdjflk;asjdfkdsjf",
-      "tag": "general",
-      "dete": "2024-01-08T10:28:03.540Z",
-      "__v": 0
-    },
-    {
-      "_id": "659bce33789b6b4b5a9f158c",
-      "user": "659a7297b7a061a1a0789b21",
-      "title": "dyshicse",
-      "description": "ajd;klfjasdlfjl;kasdjflk;asjdfkdsjf",
-      "tag": "general",
-      "dete": "2024-01-08T10:28:03.540Z",
-      "__v": 0
-    },
-    {
-      "_id": "659bce33789b6b4b5a9f158d",
-      "user": "659a7297b7a061a1a0789b21",
-      "title": "dyshicse",
-      "description": "ajd;klfjasdlfjl;kasdjflk;asjdfkdsjf",
-      "tag": "general",
-      "dete": "2024-01-08T10:28:03.540Z",
-      "__v": 0
-    }
-  ]
-
+  const noteList=[]
+  const host="http://localhost:5500";
   const [notes,setNotes] =useState(noteList);
+  const getNotes = async ()=>{
+    const response = await fetch(`${host}/api/notes/getnotes`,{
+      method : 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'auth-token' : 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjU5YTcyOTdiN2EwNjFhMWEwNzg5YjIxIn0sImlhdCI6MTcwNDYyMDg3N30.X-WKvYNlwNQwcbmYSVDJw0xAF-cMDfEfDl7oMPvav2U'
+      }
+    });
+    const data=await response.json();
+    setNotes(data);
+  }
 
   //Add Note
-  const addNote = ( title , description , tag)=>{
+  const addNote = async ( title , description , tag)=>{
+    
       //TODO: api call
+      // const response =await fetch(`${host}/api/notes/addnotes`,{
+      //   method : 'POST',
+      //   headers: {
+      //   'Content-Type': 'application/json',
+      //   'auth-token' : 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjU5YTcyOTdiN2EwNjFhMWEwNzg5YjIxIn0sImlhdCI6MTcwNDYyMDg3N30.X-WKvYNlwNQwcbmYSVDJw0xAF-cMDfEfDl7oMPvav2U'
+      //   }
+      // })
       const note={
         "_id": "659bce33789b6b4345b5a9f158b",
         "user": "659a7297234b7a061a1a0789b21",
@@ -99,7 +44,8 @@ const NoteState = (props) => {
   //Delete Note
   const deleteNote = (id)=>{
     //TODO: api call
-    //here we are doing fileter if note._id not present then return or fileter it
+    //here we are doing fileter if note._id not present then return or fileter 
+    //then there will be no note with _id id in notes
     const newNote=notes.filter((note)=>{return note._id!==id})
     setNotes(newNote);
   }
@@ -109,7 +55,7 @@ const NoteState = (props) => {
 
   
   return (
-    <NoteContext.Provider value={{notes,addNote,deleteNote}}>
+    <NoteContext.Provider value={{notes, getNotes , addNote , deleteNote}}>
       {props.children}
     </NoteContext.Provider>
   )

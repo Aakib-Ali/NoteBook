@@ -1,11 +1,13 @@
 // entry point
 const connectToMongoo = require('./db');
 const express = require('express')
+const cors =require('cors')
 connectToMongoo();
 
 const app=express();
 const port=5500
 
+app.use(cors());
 app.use(express.json()); // to deal with json in api
 
 
