@@ -42,8 +42,15 @@ const NoteState = (props) => {
   }
 
   //Delete Note
-  const deleteNote = (id)=>{
-    //TODO: api call
+  const deleteNote =  async (id)=>{
+    //api call
+    const response = await fetch(`${host}/api/notes/delete/${id}`,{
+      method : 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        'auth-token' : 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjU5YTcyOTdiN2EwNjFhMWEwNzg5YjIxIn0sImlhdCI6MTcwNDYyMDg3N30.X-WKvYNlwNQwcbmYSVDJw0xAF-cMDfEfDl7oMPvav2U'
+      }
+    });
     //here we are doing fileter if note._id not present then return or fileter 
     //then there will be no note with _id id in notes
     const newNote=notes.filter((note)=>{return note._id!==id})

@@ -26,9 +26,13 @@ const AddNote = () => {
           </div>
           <div className="mb-3">
             <label htmlFor="description" className="form-label">Example textarea</label>
-            <input type='text' onChange={hendleOnClick} className="form-control" id="description" name="description"></input>
-            <button type="button" className="btn btn-primary my-3" onClick={hendleAddnote}>Add Note</button>
+            <input type='text' onChange={hendleOnClick} className="form-control" id="description" name="description" placeholder='Description'></input>
           </div>
+          <div className="mb-3">
+            <label htmlFor="tag" className="form-label">Tag</label>
+            <input type='text' onChange={hendleOnClick} className="form-control" id="tag" name="tag" placeholder='Tag'></input>
+          </div>
+            <button type="button" className="btn btn-primary my-3" onClick={hendleAddnote}>Add Note</button>
         </div>
         </form>
       </div>
