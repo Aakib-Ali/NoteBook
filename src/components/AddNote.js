@@ -3,11 +3,11 @@ import noteContext from "../context/notes/noteContext";
 
 const AddNote = () => {
     const {addNote } = useContext(noteContext);
-    const [note,setNotes]=useState({"title": "","description": "", "tag":"general"});
+    const [note,setNotes]=useState({"title": "","description": "", "tag":""});
 
     const hendleAddnote = (e) =>{
         e.preventDefault();
-        addNote(note.title,note.description,note.tag);
+        addNote(note.title, note.description, note.tag);
     }
 
     //it will overwrite the value of name like text field name is title and value also be title  so we stor value in title
@@ -25,7 +25,7 @@ const AddNote = () => {
             <input type="text" className="form-control" id="title" onChange={hendleOnClick} name="title" placeholder="Title"/>
           </div>
           <div className="mb-3">
-            <label htmlFor="description" className="form-label">Example textarea</label>
+            <label htmlFor="description" className="form-label">Description</label>
             <input type='text' onChange={hendleOnClick} className="form-control" id="description" name="description" placeholder='Description'></input>
           </div>
           <div className="mb-3">
