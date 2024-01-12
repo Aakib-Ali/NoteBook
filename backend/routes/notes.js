@@ -9,7 +9,7 @@ const { body, validationResult } = require("express-validator");
 router.post('/addnotes', [
     body("title", "Enter tilter at least 3 char").isLength({min:3}),
     body("description", "Enter Description with min 5 characters").isLength({min:5}),
-    body("tag","Enter tag")
+    body("tag","Enter tag").isLength({min:2})
 ], fetchuser, async (req,res)=>{
     try{
         const error=validationResult(req);
@@ -17,9 +17,9 @@ router.post('/addnotes', [
             return res.status(400).send({errors: error.array()});
         }
         //destructuring 
-        const { title,description, teg}=req.body;
+        const { title,description, tag}=req.body;
         const note= new Note({
-            title,description,teg, user : req.user.id
+            title,description,tag, user : req.user.id
         });
         const saveNote=await note.save();
         res.send(saveNote);

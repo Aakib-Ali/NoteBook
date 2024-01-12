@@ -13,7 +13,7 @@ const NoteState = (props) => {
         "Content-Type": "application/json",
         "auth-token":
           "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjU5YTcyOTdiN2EwNjFhMWEwNzg5YjIxIn0sImlhdCI6MTcwNDYyMDg3N30.X-WKvYNlwNQwcbmYSVDJw0xAF-cMDfEfDl7oMPvav2U",
-      },
+      }
     });
     const data = await response.json();
     setNotes(data);
@@ -78,7 +78,6 @@ const NoteState = (props) => {
         break;
       }
     }
-    console.log(notes);
     setNotes(newNote);
   };
 

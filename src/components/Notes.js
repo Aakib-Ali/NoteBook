@@ -66,7 +66,7 @@ const Notes = () => {
                                         <input type="text" onChange={onClick} value={note.edescription} className="form-control" id="description" name="edescription" placeholder="Description" />
                                     </div>
                                     <div className="mb-3">
-                                        <label htmlFor="tag" className="form-label">
+                                        <label onChange={onClick} htmlFor="tag" className="form-label">
                                             Tag
                                         </label>
                                         <input type="text" onChange={onClick} value={note.etag} className="form-control" id="etag" name="etag" placeholder='Tag' />
@@ -76,13 +76,16 @@ const Notes = () => {
                         </div>
                         <div className="modal-footer">
                             <button ref={refClose} type="button" className="btn btn-secondary" data-bs-dismiss="modal"> Close</button>
-                            <button onClick={handleClick} type="button" className="btn btn-primary" > Update </button>
+                            <button disabled={note.etitle.length < 5 || note.etitle.length < 5 }  onClick={handleClick} type="button" className="btn btn-primary" > Update </button>
                         </div>
                     </div>
                 </div>
             </div>
-            <div className="row my-3">
+            <div className="container row my-3">
                 <h2>Your Notes</h2>
+                <div className="container">
+                {notes.length==0 && "There is no notes"}
+                </div>
                 {notes.map((note) => {
                     return (
                         <NoteItems updateNote={updateNote} key={note._id} note={note} />
