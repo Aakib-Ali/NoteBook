@@ -15,11 +15,12 @@ router.post("/createuser",
     body("password", "Enter valid password").isLength({ min: 5 }),
   ],
   async (req, res) => {
+    let success =false;
     // if theree is error return bed request
     const error = validationResult(req);
     try {
       if (!error.isEmpty()) {
-        return res.status(400).json({ error: error.array() });
+        return res.status(400).json({ success,error: error.array() });
       }
 
       //create secret pass by use cryptography
@@ -29,7 +30,7 @@ router.post("/createuser",
       // create user with velidation that there is user with same email or not
       let user = await User.findOne({ email: req.body.email });
       if (user) {
-        return res.status(400).json("Emaile already exists");
+        return res.status(400).json({success, error:"Emaile already exists"});
       }
       //create user and this is a promiss
       user = await User.create({
@@ -45,14 +46,15 @@ router.post("/createuser",
           id: user.id,
         },
       };
+      success=true;
 
       //jwt use
       const authToken = jwt.sign(data, JWT_SECRET);
-      res.send({ authToken });
+      res.send({success, authToken });
       // res.send({user});
     } catch (error) {
       console.log(error.message);
-      res.status(500).send("Internal Error Occurs");
+      res.status(500).send({success, error:"Internal Error Occurs"});
     }
   }
 );
@@ -65,6 +67,7 @@ router.post(
     body("password", "Password can not empty").exists(),
   ],
   async (req, res) => {
+    let success=false;
     const error = validationResult(req);
     try {
       if (!error.isEmpty()) {
@@ -73,9 +76,13 @@ router.post(
       const { email, password } = req.body;
       let user = await User.findOne({ email });
       if (!user) {
-        return res.status(500).json({ error: "Invalid credentials" });
+        return res.status(500).json({ success, error: "Invalid credentials" });
       }
       const passwordCompare = await bcrypt.compare(password, user.password);
+      if(!passwordCompare){
+        success =false;
+        return res.status(400).json({success,error: "Try to login with correct credential"});
+      }
       const data = {
         //take id of user from data
         user: {
@@ -84,7 +91,8 @@ router.post(
       };
       //jwt use
       const authToken = jwt.sign(data, JWT_SECRET);
-      res.send({ authToken });
+      success=true; 
+      res.send({success, authToken });
       // res.send({user});
     } catch (error) {
       console.log(error.message);

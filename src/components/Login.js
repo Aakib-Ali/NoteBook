@@ -23,7 +23,11 @@ const Login = () => {
         const json = await response.json();
         console.log(json)
         //redirect to home page
-        navigate("/");
+        if(json.success === true)
+            navigate("/");
+        else{
+            alert("invalid credentials");
+        }
     }
 
     return (
