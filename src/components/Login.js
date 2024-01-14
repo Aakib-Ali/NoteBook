@@ -21,11 +21,11 @@ const Login = (props) => {
             body: JSON.stringify({email: credential.email, password: credential.password})
         })
         const json = await response.json();
-        console.log(json)
         //redirect to home page
         if(json.success === true){
-            navigate("/");
+            localStorage.setItem('token', json.authToken);
             props.showAlert("Logged in Successfully" , "success");
+            navigate("/");
         }
         else{
             props.showAlert("Invelid Credential" , "danger");

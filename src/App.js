@@ -10,7 +10,7 @@ import Signup from "./components/Signup";
 import { useState } from "react";
 
 function App() {
-  const [alert,setAlert]=useState('');
+  const [alert,setAlert]=useState('null');
   const showAlert = (message,type)=>{
       setAlert({
         message:message,
