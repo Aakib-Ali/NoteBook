@@ -1,13 +1,14 @@
 import React from 'react'
 
 const Alert = (props) => {
+  if (props.alert === null) {
+    return;
+  }
   return (
-    <div>
-      <h6 className="alert alert-primary" role="alert">
-        {props.message}
-        </h6>
+    <div className={`alert alert-${props.alert.type} ` } role="alert">
+      <strong>{props.alert.type==="danger"? "Error:":props.alert.type}</strong>{props.alert.message}
     </div>
-  )
+  );
 }
 
 export default Alert

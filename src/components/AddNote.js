@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react'
 import noteContext from "../context/notes/noteContext";
 
-const AddNote = () => {
+const AddNote = (props) => {
   const { addNote } = useContext(noteContext);
   const [note, setNotes] = useState({ "title": "", "description": "", "tag": "" });
 
@@ -9,6 +9,7 @@ const AddNote = () => {
     e.preventDefault();
     addNote(note.title, note.description, note.tag);
     setNotes({ "title": "", "description": "", "tag": "" });
+    props.showAlert("Added Node Successfully" , "success");
   }
 
   //it will overwrite the value of name like text field name is title and value also be title  so we stor value in title

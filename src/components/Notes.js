@@ -3,7 +3,7 @@ import noteContext from "../context/notes/noteContext";
 import NoteItems from "./NoteItems";
 import AddNote from "./AddNote";
 
-const Notes = () => {
+const Notes = (props) => {
     const { notes, getNotes, editNotes } = useContext(noteContext);
     useEffect(() => {
         getNotes();
@@ -22,6 +22,7 @@ const Notes = () => {
     const handleClick = () => {
         editNotes(note.id, note.etitle, note.edescription, note.etag);
         refClose.current.click();
+        props.showAlert("Update Successfully" , "success");
     };
 
     // It will overwrite the value of name like text field name is title and value also be title,
@@ -32,7 +33,7 @@ const Notes = () => {
 
     return (
         <>
-            <AddNote />
+            <AddNote showAlert={props.showAlert} />
             {/* modal */}
             <button 
                 type="button"
@@ -88,7 +89,7 @@ const Notes = () => {
                 </div>
                 {notes.map((note) => {
                     return (
-                        <NoteItems updateNote={updateNote} key={note._id} note={note} />
+                        <NoteItems updateNote={updateNote} showAlert={props.showAlert} key={note._id} note={note} />
                     );
                 })}
             </div>

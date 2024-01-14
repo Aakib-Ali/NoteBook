@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-const Signup = () => {
+const Signup = (props) => {
     const [credentials,setCredentials] =useState({name:"", email:"", password:"", cpassword:""})
     const navigate=useNavigate();
     const handleChange=(e)=>{
@@ -20,10 +20,12 @@ const Signup = () => {
         const json = await response.json();
         console.log(json)
         //redirect to home page
-        if(json.success === true)
+        if(json.success === true){
             navigate("/");
-        else{
-            alert("invalid credentials");
+            props.showAlert("Signed in Successfully" , "success");
+        }else{
+            
+            props.showAlert("Invelid Credentials" , "danger");
         }
     }
 
